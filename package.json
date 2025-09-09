@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@google-cloud/firestore": "^7.9.0",
+    "@google-cloud/storage": "^7.17.0",
     "next": "14.2.5",
     "openai": "^4.57.0",
     "react": "18.3.1",
