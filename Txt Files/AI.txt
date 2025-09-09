@@ -1,0 +1,13 @@
+# File 3 — AI (Very Short Primer)
+
+**Definition (OECD):** Machine-based systems that, for explicit or implicit objectives, infer from inputs how to generate outputs (predictions, content, decisions) that influence the world. ([OECD AI][11])
+
+**Key buckets:** ML (supervised/unsupervised), deep learning, reinforcement learning, and foundation models. ([Stanford HAI][12])
+
+**Typical lifecycle:** Problem → data → train/validate → deploy → monitor (accuracy, drift, safety). ([NIST][13])
+
+**Benefits:** Automation, decision support, personalization. **Risks:** Bias, privacy/security, misuse, reliability. Use risk frameworks (e.g., **NIST AI RMF**) to manage. ([NIST][13])
+
+**Current trend:** Enterprises pair foundation models with **RAG** or fine-tuning to ground answers in private data. ([The Wall Street Journal][4])
+
+---

@@ -1,0 +1,16 @@
+# File 1 — RAG (Retrieval-Augmented Generation)
+
+**What it is:** A pattern that lets an LLM pull facts from your own knowledge base *at answer time* to boost accuracy and reduce hallucinations. ([Amazon Web Services, Inc.][1], [NVIDIA Blog][2])
+
+**How it works (quick flow):**
+
+1. Chunk & embed your docs into a vector index → 2) Retrieve top-k passages for a query → 3) Stuff them into the prompt (with citations) → 4) Generate + optionally re-rank. ([NVIDIA Blog][2], [IBM][3])
+
+**When to use:** Private/fast-changing info, policy/help centers, enterprise QA. ([The Wall Street Journal][4])
+
+**Gotchas:** Quality of chunks & retrieval > model size; ground truth ≠ guaranteed; monitor drift & freshness. ([WIRED][5])
+
+**Minimal stack:** Ingestor + Embeddings + Vector DB + Retriever + Prompt-builder + LLM + Evaluator. ([Google Cloud][6])
+
+---
+
