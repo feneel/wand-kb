@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Here’s a clean, copy-paste **README.md** that matches the app we built, uses **npm** (not pnpm), and stays concise. I added a short demo script and a copyright footer.
 
-## Getting Started
+---
 
-First, run the development server:
+# Wand KB — AI Knowledge Base (TXT)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+A small RAG app: upload **.txt** files, ask questions, get **LLM answers with citations**, plus a **completeness** signal and **enrichment suggestions**.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+* **Stack:** Next.js (App Router), Tailwind, Firestore **Vector Search**, OpenAI (embeddings + chat)
+* **Scope:** TXT-only for reliability
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+## Design decisions
 
-To learn more about Next.js, take a look at the following resources:
+* **TXT-only ingestion:** predictable parsing in 24h; focus on retrieval/UX instead of PDF/OCR edge cases.
+* **Background indexing:** upload returns immediately; chunking/embeddings run after response → no stuck spinners/timeouts.
+* **Micro-batches & small writes:** ≤50 writes per commit, store ≤700 chars per chunk → avoids Firestore “write too big”.
+* **Hybrid retrieval:** vector search first; lexical preview scan as a fallback for tiny corpora/short fact queries.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Trade-offs (24h)
 
-## Deploy on Vercel
+* No PDF/OCR; can be added later.
+* Polling for status (simple) vs. SSE/WebSockets.
+* Single-tenant Firestore; no multi-user auth in this demo.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## How to test
+
+1. **Upload** a small `.txt` (drag & drop or file picker).
+   You’ll see `status: indexing` → then `ready`, with `chunks: N` and a non-null `stored:` path.
+
+2. **Ask** a question that exists in the text (e.g., “What was the score for SQL Knowledge?”).
+   You’ll get an answer with inline `[ #n ]` citations, **Sources**, and a completeness indicator.
+
+3. **Try an uncovered question** to see low completeness and enrichment suggestions.
+
+4. **Delete** a document and confirm its chunks and file parts disappear.
+
+---
+
+## Notes
+
+* This demo assumes a single user/project.
+* PDFs/other formats can be added (PDF parser + OCR) once stability is not a constraint.
+* Real-time status can be upgraded to Firestore `onSnapshot`/SSE; answers can be streamed if desired.
+
+---
+
+**Copyright © 2025 \<Feneel Doshi>. All rights reserved.**
