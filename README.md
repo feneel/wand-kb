@@ -1,7 +1,3 @@
-Here’s a clean, copy-paste **README.md** that matches the app we built, uses **npm** (not pnpm), and stays concise. I added a short demo script and a copyright footer.
-
----
-
 # Wand KB — AI Knowledge Base (TXT)
 
 A small RAG app: upload **.txt** files, ask questions, get **LLM answers with citations**, plus a **completeness** signal and **enrichment suggestions**.
